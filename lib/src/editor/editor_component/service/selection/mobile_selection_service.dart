@@ -1,11 +1,8 @@
 import 'package:appflowy_editor/appflowy_editor.dart';
 import 'package:appflowy_editor/src/flutter/overlay.dart';
-import 'package:appflowy_editor/src/render/selection/mobile_selection_widget.dart';
+import 'package:appflowy_editor/src/render/selection/selection.dart';
 import 'package:appflowy_editor/src/service/selection/mobile_selection_gesture.dart';
 import 'package:flutter/material.dart' hide Overlay, OverlayEntry;
-
-import 'package:appflowy_editor/src/render/selection/cursor_widget.dart';
-import 'package:appflowy_editor/src/render/selection/selection_widget.dart';
 import 'package:provider/provider.dart';
 
 enum MobileSelectionDragMode {
@@ -26,12 +23,14 @@ class MobileSelectionServiceWidget extends StatefulWidget {
     Key? key,
     this.cursorColor = const Color(0xFF00BCF0),
     this.selectionColor = const Color.fromARGB(53, 111, 201, 231),
+    this.selectionHandlerColor = Colors.black,
     required this.child,
   }) : super(key: key);
 
   final Widget child;
   final Color cursorColor;
   final Color selectionColor;
+  final Color selectionHandlerColor;
 
   @override
   State<MobileSelectionServiceWidget> createState() =>
@@ -357,7 +356,8 @@ class _MobileSelectionServiceWidgetState
 
     final overlay = OverlayEntry(
       builder: (context) => MobileSelectionWidget(
-        color: widget.selectionColor,
+        selectionColor: widget.selectionColor,
+        selectionHandlerColor: widget.selectionHandlerColor,
         layerLink: node.layerLink,
         rect: rect,
         decoration: BoxDecoration(
@@ -387,8 +387,9 @@ class _MobileSelectionServiceWidgetState
       final node = backwardNodes.first;
       final rect = Offset.zero & node.rect.size;
       final overlay = OverlayEntry(
-        builder: (context) => SelectionWidget(
-          color: widget.selectionColor,
+        builder: (context) => MobileSelectionWidget(
+          selectionColor: widget.selectionColor,
+          selectionHandlerColor: widget.selectionHandlerColor,
           layerLink: node.layerLink,
           rect: rect,
         ),
@@ -432,7 +433,8 @@ class _MobileSelectionServiceWidgetState
           selectionRects.add(selectionRect);
           final overlay = OverlayEntry(
             builder: (context) => MobileSelectionWidget(
-              color: widget.selectionColor,
+              selectionColor: widget.selectionColor,
+              selectionHandlerColor: widget.selectionHandlerColor,
               layerLink: node.layerLink,
               rect: rect,
               showLeftHandler: i == 0 && j == 0,
@@ -469,7 +471,7 @@ class _MobileSelectionServiceWidgetState
     final cursorRect = selectable?.getCursorRectInPosition(position);
     if (selectable != null && cursorRect != null) {
       final cursorArea = OverlayEntry(
-        builder: (context) => CursorWidget(
+        builder: (context) => MobileCursorWidget(
           key: _cursorKey,
           rect: cursorRect,
           color: widget.cursorColor,

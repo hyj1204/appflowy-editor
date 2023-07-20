@@ -135,6 +135,7 @@ class _CustomizeThemeForEditorState extends State<CustomizeThemeForEditor> {
           : const EdgeInsets.symmetric(horizontal: 20),
       cursorColor: Colors.green,
       selectionColor: Colors.green,
+      selectionHandlerColor: Colors.blue,
       textStyleConfiguration: TextStyleConfiguration(
         text: const TextStyle(
           fontSize: 18.0,
