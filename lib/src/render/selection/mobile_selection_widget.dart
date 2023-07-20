@@ -5,13 +5,15 @@ class MobileSelectionWidget extends StatelessWidget {
     Key? key,
     required this.layerLink,
     required this.rect,
-    required this.color,
+    required this.selectionColor,
+    required this.selectionHandlerColor,
     this.decoration,
     this.showLeftHandler = false,
     this.showRightHandler = false,
   }) : super(key: key);
 
-  final Color color;
+  final Color selectionColor;
+  final Color selectionHandlerColor;
   final Rect rect;
   final LayerLink layerLink;
   final BoxDecoration? decoration;
@@ -30,7 +32,8 @@ class MobileSelectionWidget extends StatelessWidget {
         //  to solve the problem that selection areas cannot overlap.
         child: IgnorePointer(
           child: MobileSelectionWithHandler(
-            color: color,
+            selectionColor: selectionColor,
+            handlerColor: selectionHandlerColor,
             decoration: decoration,
             showLeftHandler: showLeftHandler,
             showRightHandler: showRightHandler,
@@ -44,15 +47,15 @@ class MobileSelectionWidget extends StatelessWidget {
 class MobileSelectionWithHandler extends StatelessWidget {
   const MobileSelectionWithHandler({
     super.key,
-    required this.color,
+    required this.selectionColor,
+    required this.handlerColor,
     this.showLeftHandler = false,
     this.showRightHandler = false,
-    this.handlerColor = Colors.black,
     this.decoration,
     this.handlerWidth = 2.0,
   });
 
-  final Color color;
+  final Color selectionColor;
   final BoxDecoration? decoration;
 
   final bool showLeftHandler;
@@ -63,16 +66,26 @@ class MobileSelectionWithHandler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget child = Container(
-      color: decoration == null ? color : null,
+      color: decoration == null ? selectionColor : null,
       decoration: decoration,
     );
     if (showLeftHandler || showRightHandler) {
       child = Row(
         children: [
           if (showLeftHandler)
-            Container(
-              width: handlerWidth,
-              color: handlerColor,
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircleAvatar(
+                  backgroundColor:
+                      Colors.blue, // Set the background color to blue
+                  radius: 5, // Set the radius to 50 pixels
+                ),
+                Container(
+                  width: handlerWidth,
+                  color: handlerColor,
+                ),
+              ],
             ),
           Expanded(child: child),
           if (showRightHandler)

@@ -12,6 +12,7 @@ class EditorStyle {
     required this.padding,
     required this.cursorColor,
     required this.selectionColor,
+    required this.selectionHandlerColor,
     required this.textStyleConfiguration,
     required this.textSpanDecorator,
   });
@@ -24,6 +25,9 @@ class EditorStyle {
 
   /// The selection color
   final Color selectionColor;
+
+  /// The cursors color between the selection area.
+  final Color selectionHandlerColor;
 
   /// Customize the text style of the editor.
   ///
@@ -52,6 +56,7 @@ class EditorStyle {
           cursorColor: cursorColor ?? const Color(0xFF00BCF0),
           selectionColor:
               selectionColor ?? const Color.fromARGB(53, 111, 201, 231),
+          selectionHandlerColor: selectionColor ?? Colors.black,
           textStyleConfiguration: textStyleConfiguration ??
               const TextStyleConfiguration(
                 text: TextStyle(fontSize: 16, color: Colors.black),
@@ -72,6 +77,7 @@ class EditorStyle {
           cursorColor: cursorColor ?? const Color(0xFF00BCF0),
           selectionColor:
               selectionColor ?? const Color.fromARGB(53, 111, 201, 231),
+          selectionHandlerColor: selectionColor ?? Colors.black,
           textStyleConfiguration: textStyleConfiguration ??
               const TextStyleConfiguration(
                 text: TextStyle(fontSize: 16, color: Colors.black),
@@ -85,6 +91,7 @@ class EditorStyle {
     Color? backgroundColor,
     Color? cursorColor,
     Color? selectionColor,
+    Color? selectionHandlerColor,
     TextStyleConfiguration? textStyleConfiguration,
     TextSpanDecoratorForAttribute? textSpanDecorator,
   }) {
@@ -92,6 +99,8 @@ class EditorStyle {
       padding: padding ?? this.padding,
       cursorColor: cursorColor ?? this.cursorColor,
       selectionColor: selectionColor ?? this.selectionColor,
+      selectionHandlerColor:
+          selectionHandlerColor ?? this.selectionHandlerColor,
       textStyleConfiguration:
           textStyleConfiguration ?? this.textStyleConfiguration,
       textSpanDecorator: textSpanDecorator ?? this.textSpanDecorator,
